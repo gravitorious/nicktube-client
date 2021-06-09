@@ -34,8 +34,8 @@ public class DownloadSpeed{
 
             public void onCompletion(SpeedTestReport report) {
                 // called when download/upload is complete
-                System.out.println("[COMPLETED] rate in octet/s : " + report.getTransferRateOctet());
-                System.out.println("[COMPLETED] rate in bit/s   : " + report.getTransferRateBit());
+                //System.out.println("[COMPLETED] rate in octet/s : " + report.getTransferRateOctet());
+                //System.out.println("[COMPLETED] rate in bit/s   : " + report.getTransferRateBit());
                 downloadSpeed = report.getTransferRateBit();
             }
 
@@ -48,13 +48,13 @@ public class DownloadSpeed{
             public void onProgress(float percent, SpeedTestReport report) {
                 // called to notify download/upload progress
 
-                System.out.println("[PROGRESS] progress : " + percent + "%");
-                System.out.println("[PROGRESS] rate in octet/s : " + report.getTransferRateOctet());
-                System.out.println("[PROGRESS] rate in bit/s   : " + report.getTransferRateBit());
+                //System.out.println("[PROGRESS] progress : " + percent + "%");
+                //System.out.println("[PROGRESS] rate in octet/s : " + report.getTransferRateOctet());
+                //System.out.println("[PROGRESS] rate in bit/s   : " + report.getTransferRateBit());
             }
         });
     }
     public void countSpeed(){
-        speedTestSocket.startFixedDownload("http://ipv4.ikoula.testdebit.info/100M.iso", 10000);
+        speedTestSocket.startFixedDownload("http://ipv4.ikoula.testdebit.info/100M.iso", 8000);
     }
 }

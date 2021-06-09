@@ -12,6 +12,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import javax.swing.border.Border;
+import java.math.BigDecimal;
 
 /**
  * @author nicktheblackbeard
@@ -40,13 +41,14 @@ public class GUI{
 
     VBox rightBox;
     VBox boxForPrintingFiles;
+    HBox boxForButton;
 
     Scene scene;
 
     public GUI(Stage primaryStage){
         this.root = new HBox(40);
         //this.root.setAlignment(Pos.BASELINE_LEFT);
-        this.scene = new Scene(root, 550, 450);
+        this.scene = new Scene(root, 570, 450);
         this.scene.getStylesheets().add(getClass().getResource("form.css").toExternalForm());
         this.root.getStyleClass().add("bg");
         this.leftBox = new VBox(40);
@@ -75,7 +77,6 @@ public class GUI{
     private void createLeftBox(){
 
         this.fileTypeLabel = new Label("File type: ");
-        this.fileTypeLabel.getStyleClass().add("label1");
         this.fileType = new ChoiceBox();
         this.fileType.getItems().add("mkv");
         this.fileType.getItems().add("mp4");
@@ -102,7 +103,7 @@ public class GUI{
 
 
     public void createRightBox(){
-        this.boxForPrintingFiles = new VBox(7);
+        this.boxForPrintingFiles = new VBox(14);
         this.listFilesLabel = new Label("Choose one file");
         this.fileNames = new ListView();
         this.fileNames.setPrefSize(230 ,280);
@@ -118,9 +119,16 @@ public class GUI{
         fileNames.getItems().add("Item gergr1");
         this.boxForPrintingFiles.getChildren().addAll(this.listFilesLabel, this.fileNames);
 
+        this.boxForButton = new HBox(15);
+        this.boxForButton.setAlignment(Pos.CENTER);
         this.playButton = new Button("Play");
+        this.boxForButton.getChildren().add(playButton);
 
-        this.rightBox.getChildren().addAll(this.boxForPrintingFiles, this.playButton);
+        this.rightBox.getChildren().addAll(this.boxForPrintingFiles, this.boxForButton);
     }
-    
+
+    public void setDownloadSpeedLabel(Double speed){
+        this.downloadSpeedLabel.setText("Your download speed is: " + speed.floatValue() + " kbps");
+    }
+
 }

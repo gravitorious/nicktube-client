@@ -9,6 +9,7 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.security.Guard;
 import java.util.concurrent.TimeUnit;
 
@@ -25,9 +26,10 @@ public class Main extends Application{
     public void start(Stage primaryStage) throws Exception {
         DownloadSpeed ds = new DownloadSpeed();
         ds.countSpeed();
-        TimeUnit.SECONDS.sleep(12);
+        TimeUnit.SECONDS.sleep(9);
         primaryStage.setTitle("nickTube");
         GUI gui = new GUI(primaryStage);
+        gui.setDownloadSpeedLabel(DownloadSpeed.downloadSpeed.doubleValue()/1000);
         primaryStage.show();
     }
 
