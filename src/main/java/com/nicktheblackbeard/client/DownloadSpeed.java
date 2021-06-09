@@ -18,6 +18,12 @@ public class DownloadSpeed{
     public static BigDecimal downloadSpeed;
     SpeedTestSocket speedTestSocket;
 
+
+    /*
+        1)run contructor
+        2)call countSpeed
+        3)wait 10+ seconds to get the result on downloadSpeed
+     */
     public DownloadSpeed(){
         //ClientConnection con = new ClientConnection();
         speedTestSocket = new SpeedTestSocket();
