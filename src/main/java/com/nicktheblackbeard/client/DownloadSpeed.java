@@ -16,6 +16,7 @@ import java.math.BigDecimal;
 public class DownloadSpeed{
 
     public static BigDecimal downloadSpeed;
+    public static float floatDownloadSpeed;
     SpeedTestSocket speedTestSocket;
 
 

@@ -6,13 +6,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
-import javax.swing.border.Border;
-import java.math.BigDecimal;
 
 /**
  * @author nicktheblackbeard
@@ -45,6 +41,8 @@ public class GUI{
 
     Scene scene;
 
+    public static int metr = 0;
+
     public GUI(Stage primaryStage){
         this.root = new HBox(40);
         //this.root.setAlignment(Pos.BASELINE_LEFT);
@@ -62,6 +60,8 @@ public class GUI{
 
         this.root.getChildren().addAll(this.leftBox, this.rightBox);
         primaryStage.setScene(this.scene);
+
+        this.addListenerToProtocolsList();
     }
 
 
@@ -127,8 +127,48 @@ public class GUI{
         this.rightBox.getChildren().addAll(this.boxForPrintingFiles, this.boxForButton);
     }
 
-    public void setDownloadSpeedLabel(Double speed){
-        this.downloadSpeedLabel.setText("Your download speed is: " + speed.floatValue() + " kbps");
+    public void setDownloadSpeedLabel(){
+        this.downloadSpeedLabel.setText("Your download speed is: " + DownloadSpeed.floatDownloadSpeed + " kbps");
+    }
+
+    void addListenerToProtocolsList(){
+        this.protocol.setOnAction((event) -> {
+            int selectedIndex = protocol.getSelectionModel().getSelectedIndex();
+            String selectedItem = (String) protocol.getSelectionModel().getSelectedItem();
+            System.out.println("choosen " + selectedItem);
+            if(metr % 2 == 0){
+                clearFilesList();
+                addmod2();
+                metr++;
+            }
+            else{
+                clearFilesList();
+                addmod2_1();
+                metr++;
+            }
+        });
+    }
+
+    void clearFilesList(){
+        this.fileNames.getItems().clear();
+    }
+
+    void addmod2(){
+        fileNames.getItems().add("1mod222222");
+        fileNames.getItems().add("2mod222222");
+        fileNames.getItems().add("3mod222222");
+        fileNames.getItems().add("4mod222222");
+        fileNames.getItems().add("5mod222222");
+
+    }
+
+    void addmod2_1(){
+        fileNames.getItems().add("falsemod222222");
+        fileNames.getItems().add("falsemod222222");
+        fileNames.getItems().add("falsemod222222");
+        fileNames.getItems().add("falsemod222222");
+        fileNames.getItems().add("falsemod222222");
+
     }
 
 }

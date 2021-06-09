@@ -19,6 +19,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class Main extends Application{
 
+
     public static void main(String[] args) throws IOException, InterruptedException {
         Application.launch(args);
     }
@@ -26,11 +27,15 @@ public class Main extends Application{
     public void start(Stage primaryStage) throws Exception {
         DownloadSpeed ds = new DownloadSpeed();
         ds.countSpeed();
-        TimeUnit.SECONDS.sleep(9);
+        TimeUnit.SECONDS.sleep(13);
+        DownloadSpeed.floatDownloadSpeed =  DownloadSpeed.downloadSpeed.floatValue()/1000;
+        System.out.println(DownloadSpeed.floatDownloadSpeed);
+        ClientConnection connection = new ClientConnection();
+        /*
         primaryStage.setTitle("nickTube");
         GUI gui = new GUI(primaryStage);
-        gui.setDownloadSpeedLabel(DownloadSpeed.downloadSpeed.doubleValue()/1000);
-        primaryStage.show();
+        gui.setDownloadSpeedLabel();
+        primaryStage.show();*/
     }
 
 
