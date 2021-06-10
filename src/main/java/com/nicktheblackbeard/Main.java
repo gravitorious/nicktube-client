@@ -4,7 +4,14 @@ import com.nicktheblackbeard.client.*;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
+
+import java.lang.ProcessBuilder;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -19,6 +26,8 @@ public class Main extends Application{
     }
 
     public void start(Stage primaryStage) throws Exception {
+
+
         DownloadSpeed ds = new DownloadSpeed();
         ds.countSpeed();
         TimeUnit.SECONDS.sleep(13);
@@ -30,9 +39,14 @@ public class Main extends Application{
         GUI gui = new GUI(primaryStage);
         gui.setDownloadSpeedLabel();
         primaryStage.show();
+
+
     }
 
-
+    @Override
+    public void stop() throws Exception {
+        ClientConnection.closeConnection();
+    }
 }
 
 

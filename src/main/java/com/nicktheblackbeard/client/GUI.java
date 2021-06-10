@@ -6,9 +6,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
+import java.io.IOException;
 
 /**
  * @author nicktheblackbeard
@@ -43,6 +46,8 @@ public class GUI{
 
     public static int metr = 0;
 
+    public static String sendingProtocol;
+
     public GUI(Stage primaryStage){
         this.root = new HBox(40);
         //this.root.setAlignment(Pos.BASELINE_LEFT);
@@ -62,6 +67,7 @@ public class GUI{
         primaryStage.setScene(this.scene);
 
         this.addListenerToFileTypeList();
+        this.addListenerToPlayButton();
     }
 
 
@@ -110,10 +116,15 @@ public class GUI{
         this.fileNames = new ListView();
         this.fileNames.setPrefSize(230 ,280);
         this.addMkvList();
+        this.fileNames.getSelectionModel().selectFirst();
         this.boxForPrintingFiles.getChildren().addAll(this.listFilesLabel, this.fileNames);
         this.boxForButton = new HBox(15);
         this.boxForButton.setAlignment(Pos.CENTER);
-        this.playButton = new Button("Play");
+        ImageView imageView = new ImageView("button.jpeg");
+        imageView.setFitHeight(40);
+        imageView.setFitWidth(40);
+        imageView.setPreserveRatio(true);
+        this.playButton = new Button("",imageView);
         this.boxForButton.getChildren().add(playButton);
 
         this.rightBox.getChildren().addAll(this.boxForPrintingFiles, this.boxForButton);
@@ -133,6 +144,36 @@ public class GUI{
             else if(selectedItem.equals("avi")) this.addAviList();
         });
     }
+
+
+    void addListenerToPlayButton(){
+        this.playButton.setOnAction((event) -> {
+
+            String nameOfSelectedFile = (String) this.fileNames.getSelectionModel().getSelectedItem();
+            String nameOfSelectedProtocol = (String) this.protocol.getSelectionModel().getSelectedItem();
+            try {
+                ClientConnection.output.writeObject(nameOfSelectedFile);
+                if(nameOfSelectedProtocol.equals("-")){
+                    String[] splitname = nameOfSelectedFile.split("-");
+                    String[] secondsplit = splitname[1].split("\\.");
+                    if(secondsplit[0].equals("240p")) sendingProtocol = "TCP";
+                    else if(secondsplit[0].equals("360p") || secondsplit[0].equals("480p")) sendingProtocol = "UDP";
+                    else if(secondsplit[0].equals("720p") || secondsplit[0].equals("1080p")) sendingProtocol = "RTP/UDP";
+                }
+                else{
+                    sendingProtocol = nameOfSelectedProtocol;
+                }
+                ClientConnection.output.writeObject(sendingProtocol);
+
+                //και το πρωτόκολλο
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+
+
 
     private void clearFilesList(){
         this.fileNames.getItems().clear();

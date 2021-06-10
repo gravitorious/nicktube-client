@@ -22,28 +22,28 @@ public class ClientConnection {
 
     public ClientConnection() throws IOException, ClassNotFoundException {
 
+        socket = new Socket("127.0.0.1", 5000);
+        output = new ObjectOutputStream(socket.getOutputStream());
+        input = new ObjectInputStream(socket.getInputStream());
+        output.writeObject(DownloadSpeed.floatDownloadSpeed);
+        client = (NClient) input.readObject();
+        ArrayList<NFile> avi_files = client.getAviFiles();
+        ArrayList<NFile> mp4_files = client.getMp4Files();
+        ArrayList<NFile> mkv_files = client.getMkvFiles();
+        printList(avi_files);
+        printList(mp4_files);
+        printList(mkv_files);
 
-        for(;;){
-            socket = new Socket("127.0.0.1", 5000);
-            output = new ObjectOutputStream(socket.getOutputStream());
-            input = new ObjectInputStream(socket.getInputStream());
-            //output.writeObject(DownloadSpeed.floatDownloadSpeed);
-            output.writeObject((float)1500);
-            client = (NClient) input.readObject();
-            ArrayList<NFile> avi_files = client.getAviFiles();
-            ArrayList<NFile> mp4_files = client.getMp4Files();
-            ArrayList<NFile> mkv_files = client.getMkvFiles();
+        System.out.println();
 
-            printList(avi_files);
-            printList(mp4_files);
-            printList(mkv_files);
 
-            System.out.println();
-            input.close();
-            output.close();
-            socket.close();
-            break;
-        }
+
+    }
+
+    public static void closeConnection() throws IOException {
+        input.close();
+        output.close();
+        socket.close();
     }
 
 
