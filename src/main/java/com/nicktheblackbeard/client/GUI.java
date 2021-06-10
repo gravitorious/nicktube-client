@@ -142,6 +142,7 @@ public class GUI{
             if(selectedItem.equals("mkv")) this.addMkvList();
             else if(selectedItem.equals("mp4")) this.addMp4List();
             else if(selectedItem.equals("avi")) this.addAviList();
+            this.fileNames.getSelectionModel().selectFirst();
         });
     }
 
@@ -164,6 +165,9 @@ public class GUI{
                     sendingProtocol = nameOfSelectedProtocol;
                 }
                 ClientConnection.output.writeObject(sendingProtocol);
+
+
+
 
                 //και το πρωτόκολλο
             } catch (IOException e) {
