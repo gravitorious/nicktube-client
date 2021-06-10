@@ -11,7 +11,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import java.io.IOException;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author nicktheblackbeard
@@ -165,17 +168,48 @@ public class GUI{
                     sendingProtocol = nameOfSelectedProtocol;
                 }
                 ClientConnection.output.writeObject(sendingProtocol);
-
-
-
+                String answerToBeginFFplay = (String) ClientConnection.input.readObject();
+                System.out.println("διάβασα:" + answerToBeginFFplay);
+                TimeUnit.SECONDS.sleep(2);
+                if(answerToBeginFFplay.equals("TCP")){
+                    this.streamWithTCP();
+                }
+                else if(answerToBeginFFplay.equals("UDP")){
+                    
+                }
 
                 //και το πρωτόκολλο
             } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         });
     }
 
+    private void streamWithTCP() throws IOException {
+        List<String> commands = new ArrayList<String>();
+        commands.add("ffplay"); // command
+        commands.add("tcp://127.0.0.1:4001");
+
+        ProcessBuilder pb = new ProcessBuilder(commands);
+        pb.directory(new File(System.getProperty("user.dir") + "/ffmpeg/"));
+        pb.redirectErrorStream(true);
+
+        // startinf the process
+        Process process = pb.start();
+
+        BufferedReader stdInput
+                = new BufferedReader(new InputStreamReader(
+                process.getInputStream()));
+
+        String s = null;
+        while ((s = stdInput.readLine()) != null) {
+            System.out.println(s);
+        }
+    }
 
 
 
