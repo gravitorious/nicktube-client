@@ -170,12 +170,12 @@ public class GUI{
                 ClientConnection.output.writeObject(sendingProtocol);
                 String answerToBeginFFplay = (String) ClientConnection.input.readObject();
                 System.out.println("διάβασα:" + answerToBeginFFplay);
-                TimeUnit.SECONDS.sleep(2);
                 if(answerToBeginFFplay.equals("TCP")){
+                    TimeUnit.SECONDS.sleep(3);
                     this.streamWithTCP();
                 }
                 else if(answerToBeginFFplay.equals("UDP")){
-                    
+                    this.streamWithUDP();
                 }
 
                 //και το πρωτόκολλο
@@ -192,7 +192,30 @@ public class GUI{
     private void streamWithTCP() throws IOException {
         List<String> commands = new ArrayList<String>();
         commands.add("ffplay"); // command
-        commands.add("tcp://127.0.0.1:4001");
+        commands.add("tcp://127.0.0.1:4010");
+
+        ProcessBuilder pb = new ProcessBuilder(commands);
+        pb.directory(new File(System.getProperty("user.dir") + "/ffmpeg/"));
+        pb.redirectErrorStream(true);
+
+        // startinf the process
+        Process process = pb.start();
+
+        BufferedReader stdInput
+                = new BufferedReader(new InputStreamReader(
+                process.getInputStream()));
+
+        String s;
+        while ((s = stdInput.readLine()) != null) {
+            System.out.println(s);
+        }
+    }
+
+
+    private void streamWithUDP() throws IOException {
+        List<String> commands = new ArrayList<String>();
+        commands.add("ffplay"); // command
+        commands.add("udp://127.0.0.1:5000");
 
         ProcessBuilder pb = new ProcessBuilder(commands);
         pb.directory(new File(System.getProperty("user.dir") + "/ffmpeg/"));
