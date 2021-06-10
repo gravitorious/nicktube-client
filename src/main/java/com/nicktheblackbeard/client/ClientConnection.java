@@ -18,6 +18,7 @@ public class ClientConnection {
     public static Socket socket = null;
     public static ObjectOutputStream output = null;
     public static ObjectInputStream input = null;
+    public static NClient client = null;
 
     public ClientConnection() throws IOException, ClassNotFoundException {
 
@@ -28,20 +29,24 @@ public class ClientConnection {
             input = new ObjectInputStream(socket.getInputStream());
             //output.writeObject(DownloadSpeed.floatDownloadSpeed);
             output.writeObject((float)1500);
-            NClient client = (NClient) input.readObject();
+            client = (NClient) input.readObject();
             ArrayList<NFile> avi_files = client.getAviFiles();
             ArrayList<NFile> mp4_files = client.getMp4Files();
             ArrayList<NFile> mkv_files = client.getMkvFiles();
+
             printList(avi_files);
             printList(mp4_files);
             printList(mkv_files);
 
             System.out.println();
+            input.close();
             output.close();
             socket.close();
             break;
         }
     }
+
+
     void printList(ArrayList<NFile> files){
         for(NFile file : files){
             System.out.println(file.toString());

@@ -25,11 +25,11 @@ public class Main extends Application{
         DownloadSpeed.floatDownloadSpeed =  DownloadSpeed.downloadSpeed.floatValue()/1000;
         System.out.println(DownloadSpeed.floatDownloadSpeed);
         ClientConnection connection = new ClientConnection();
-        /*
+
         primaryStage.setTitle("nickTube");
         GUI gui = new GUI(primaryStage);
         gui.setDownloadSpeedLabel();
-        primaryStage.show();*/
+        primaryStage.show();
     }
 
 

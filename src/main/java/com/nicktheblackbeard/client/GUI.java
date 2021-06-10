@@ -61,7 +61,7 @@ public class GUI{
         this.root.getChildren().addAll(this.leftBox, this.rightBox);
         primaryStage.setScene(this.scene);
 
-        this.addListenerToProtocolsList();
+        this.addListenerToFileTypeList();
     }
 
 
@@ -81,6 +81,7 @@ public class GUI{
         this.fileType.getItems().add("mkv");
         this.fileType.getItems().add("mp4");
         this.fileType.getItems().add("avi");
+        this.fileType.getSelectionModel().selectFirst();
         this.boxForTypeFiles = new HBox(5);
         this.boxForTypeFiles.getChildren().addAll(this.fileTypeLabel, this.fileType);
 
@@ -90,6 +91,7 @@ public class GUI{
         this.protocol.getItems().add("TCP");
         this.protocol.getItems().add("UDP");
         this.protocol.getItems().add("RTP/UDP");
+        this.protocol.getSelectionModel().selectFirst();
         this.boxForProtocol = new HBox(5);
         this.boxForProtocol.getChildren().addAll(this.protocolLabel, this.protocol);
 
@@ -107,18 +109,8 @@ public class GUI{
         this.listFilesLabel = new Label("Choose one file");
         this.fileNames = new ListView();
         this.fileNames.setPrefSize(230 ,280);
-        fileNames.getItems().add("Item 1gergregrgrger");
-        fileNames.getItems().add("Item 1gergregerverbegerer");
-        fileNames.getItems().add("Item 1vegergergreer");
-        fileNames.getItems().add("Item 1gergregre");
-        fileNames.getItems().add("Item 1grgergerg");
-        fileNames.getItems().add("Item 1");
-        fileNames.getItems().add("Item 1");
-        fileNames.getItems().add("Item gergregergerg1");
-        fileNames.getItems().add("Item 1greger");
-        fileNames.getItems().add("Item gergr1");
+        this.addMkvList();
         this.boxForPrintingFiles.getChildren().addAll(this.listFilesLabel, this.fileNames);
-
         this.boxForButton = new HBox(15);
         this.boxForButton.setAlignment(Pos.CENTER);
         this.playButton = new Button("Play");
@@ -131,44 +123,67 @@ public class GUI{
         this.downloadSpeedLabel.setText("Your download speed is: " + DownloadSpeed.floatDownloadSpeed + " kbps");
     }
 
-    void addListenerToProtocolsList(){
-        this.protocol.setOnAction((event) -> {
-            int selectedIndex = protocol.getSelectionModel().getSelectedIndex();
-            String selectedItem = (String) protocol.getSelectionModel().getSelectedItem();
-            System.out.println("choosen " + selectedItem);
-            if(metr % 2 == 0){
-                clearFilesList();
-                addmod2();
-                metr++;
-            }
-            else{
-                clearFilesList();
-                addmod2_1();
-                metr++;
-            }
+    void addListenerToFileTypeList(){
+        this.fileType.setOnAction((event) -> {
+            //int selectedIndex = this.fileType.getSelectionModel().getSelectedIndex();
+            this.clearFilesList();
+            String selectedItem = (String) this.fileType.getSelectionModel().getSelectedItem();
+            if(selectedItem.equals("mkv")) this.addMkvList();
+            else if(selectedItem.equals("mp4")) this.addMp4List();
+            else if(selectedItem.equals("avi")) this.addAviList();
         });
     }
 
-    void clearFilesList(){
+    private void clearFilesList(){
         this.fileNames.getItems().clear();
     }
 
-    void addmod2(){
-        fileNames.getItems().add("1mod222222");
-        fileNames.getItems().add("2mod222222");
-        fileNames.getItems().add("3mod222222");
-        fileNames.getItems().add("4mod222222");
-        fileNames.getItems().add("5mod222222");
-
+    private void addMkvList(){
+        String filename;
+        String format;
+        String quality;
+        int size;
+        for(int i = 0; i < ClientConnection.client.getMkvFiles().size(); i++){
+            filename = ClientConnection.client.getMkvFiles().get(i).getName();
+            format = ClientConnection.client.getMkvFiles().get(i).getFormat();
+            size = ClientConnection.client.getMkvFiles().get(i).getQualities().size();
+            for(int j = 0; j < size; j++){
+                quality = ClientConnection.client.getMkvFiles().get(i).getQualities().get(j);
+                this.fileNames.getItems().add(filename + "-" + quality + "." + format);
+            }
+        }
     }
 
-    void addmod2_1(){
-        fileNames.getItems().add("falsemod222222");
-        fileNames.getItems().add("falsemod222222");
-        fileNames.getItems().add("falsemod222222");
-        fileNames.getItems().add("falsemod222222");
-        fileNames.getItems().add("falsemod222222");
+    private void addMp4List(){
+        String filename;
+        String format;
+        String quality;
+        int size;
+        for(int i = 0; i < ClientConnection.client.getMp4Files().size(); i++){
+            filename = ClientConnection.client.getMp4Files().get(i).getName();
+            format = ClientConnection.client.getMp4Files().get(i).getFormat();
+            size = ClientConnection.client.getMp4Files().get(i).getQualities().size();
+            for(int j = 0; j < size; j++){
+                quality = ClientConnection.client.getMp4Files().get(i).getQualities().get(j);
+                this.fileNames.getItems().add(filename + "-" + quality + "." + format);
+            }
+        }
+    }
 
+    private void addAviList(){
+        String filename;
+        String format;
+        String quality;
+        int size;
+        for(int i = 0; i < ClientConnection.client.getAviFiles().size(); i++){
+            filename = ClientConnection.client.getAviFiles().get(i).getName();
+            format = ClientConnection.client.getAviFiles().get(i).getFormat();
+            size = ClientConnection.client.getAviFiles().get(i).getQualities().size();
+            for(int j = 0; j < size; j++){
+                quality = ClientConnection.client.getAviFiles().get(i).getQualities().get(j);
+                this.fileNames.getItems().add(filename + "-" + quality + "." + format);
+            }
+        }
     }
 
 }
