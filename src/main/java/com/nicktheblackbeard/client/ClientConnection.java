@@ -1,11 +1,13 @@
 package com.nicktheblackbeard.client;
 
-import com.nicktheblackbeard.Main;
+import com.nicktheblackbeard.clientdata.NClient;
+import com.nicktheblackbeard.clientdata.NFile;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
 
 /**
  * @author nicktheblackbeard
@@ -17,16 +19,32 @@ public class ClientConnection {
     public static ObjectOutputStream output = null;
     public static ObjectInputStream input = null;
 
-    public ClientConnection() throws IOException {
+    public ClientConnection() throws IOException, ClassNotFoundException {
 
 
         for(;;){
             socket = new Socket("127.0.0.1", 5000);
             output = new ObjectOutputStream(socket.getOutputStream());
-            output.writeObject(DownloadSpeed.floatDownloadSpeed);
+            input = new ObjectInputStream(socket.getInputStream());
+            //output.writeObject(DownloadSpeed.floatDownloadSpeed);
+            output.writeObject((float)1500);
+            NClient client = (NClient) input.readObject();
+            ArrayList<NFile> avi_files = client.getAviFiles();
+            ArrayList<NFile> mp4_files = client.getMp4Files();
+            ArrayList<NFile> mkv_files = client.getMkvFiles();
+            printList(avi_files);
+            printList(mp4_files);
+            printList(mkv_files);
+
+            System.out.println();
             output.close();
             socket.close();
+            break;
         }
-
+    }
+    void printList(ArrayList<NFile> files){
+        for(NFile file : files){
+            System.out.println(file.toString());
+        }
     }
 }

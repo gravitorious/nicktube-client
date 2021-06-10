@@ -1,16 +1,10 @@
 package com.nicktheblackbeard;
 
 import com.nicktheblackbeard.client.*;
-import fr.bmartel.speedtest.SpeedTestReport;
-import fr.bmartel.speedtest.inter.ISpeedTestListener;
-import fr.bmartel.speedtest.model.SpeedTestError;
-import fr.bmartel.speedtest.SpeedTestSocket;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.math.BigDecimal;
-import java.security.Guard;
 import java.util.concurrent.TimeUnit;
 
 /**
