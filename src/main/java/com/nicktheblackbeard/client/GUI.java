@@ -177,6 +177,9 @@ public class GUI{
                 else if(answerToBeginFFplay.equals("UDP")){
                     this.streamWithUDP();
                 }
+                else if(answerToBeginFFplay.equals("RTP/UDP")){
+                    this.streamWithRTP();
+                }
 
                 //και το πρωτόκολλο
             } catch (IOException e) {
@@ -190,7 +193,7 @@ public class GUI{
     }
 
     private void streamWithTCP() throws IOException {
-        List<String> commands = new ArrayList<String>();
+        List<String> commands = new ArrayList<>();
         commands.add("ffplay"); // command
         commands.add("tcp://127.0.0.1:4010");
 
@@ -213,9 +216,36 @@ public class GUI{
 
 
     private void streamWithUDP() throws IOException {
-        List<String> commands = new ArrayList<String>();
+        List<String> commands = new ArrayList<>();
         commands.add("ffplay"); // command
         commands.add("udp://127.0.0.1:5000");
+
+        ProcessBuilder pb = new ProcessBuilder(commands);
+        pb.directory(new File(System.getProperty("user.dir") + "/ffmpeg/"));
+        pb.redirectErrorStream(true);
+
+        // startinf the process
+        Process process = pb.start();
+
+        BufferedReader stdInput
+                = new BufferedReader(new InputStreamReader(
+                process.getInputStream()));
+
+        String s = null;
+        while ((s = stdInput.readLine()) != null) {
+            System.out.println(s);
+        }
+    }
+
+    private void streamWithRTP() throws IOException {
+        List<String> commands = new ArrayList<>();
+        commands.add("ffplay");
+        commands.add("-protocol_whitelist");
+        commands.add("file,rtp,udp");
+        commands.add("-i");
+        commands.add("video.sdp");
+        commands.add("-fflags");
+        commands.add("nobuffer");
 
         ProcessBuilder pb = new ProcessBuilder(commands);
         pb.directory(new File(System.getProperty("user.dir") + "/ffmpeg/"));
