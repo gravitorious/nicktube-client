@@ -237,22 +237,29 @@ public class GUI{
         }
     }
 
-    private void streamWithRTP() throws IOException {
+    private void streamWithRTP() throws IOException, InterruptedException, ClassNotFoundException {
         List<String> commands = new ArrayList<>();
+        //TimeUnit.SECONDS.sleep(13);
         commands.add("ffplay");
         commands.add("-protocol_whitelist");
         commands.add("file,rtp,udp");
         commands.add("-i");
         commands.add("video.sdp");
-        commands.add("-fflags");
-        commands.add("nobuffer");
+        //commands.add("-fflags");
+        //commands.add("nobuffer");
 
         ProcessBuilder pb = new ProcessBuilder(commands);
         pb.directory(new File(System.getProperty("user.dir") + "/ffmpeg/"));
         pb.redirectErrorStream(true);
 
+        String videosdp = (String) ClientConnection.input.readObject();
+        try (PrintWriter out = new PrintWriter(System.getProperty("user.dir") + "/ffmpeg/"+"video.sdp")) {
+            out.println(videosdp);
+        }
         // startinf the process
         Process process = pb.start();
+
+        ClientConnection.output.writeObject("ready"); //send message to server
 
         BufferedReader stdInput
                 = new BufferedReader(new InputStreamReader(
@@ -262,6 +269,7 @@ public class GUI{
         while ((s = stdInput.readLine()) != null) {
             System.out.println(s);
         }
+        System.out.println("ΒΓΗΚΑ");
     }
 
 

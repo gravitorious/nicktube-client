@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7723984f-5d6c-4b3f-9343-13839b49b1dd" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/nicktheblackbeard/client/GUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nicktheblackbeard/client/GUI.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -19,8 +18,8 @@
       <file leaf-file-name="GUI.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/nicktheblackbeard/client/GUI.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="185">
-              <caret line="164" column="81" lean-forward="true" selection-start-line="164" selection-start-column="81" selection-end-line="164" selection-end-column="81" />
+            <state relative-caret-position="334">
+              <caret line="271" column="36" lean-forward="true" selection-start-line="271" selection-start-column="36" selection-end-line="271" selection-end-column="36" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -31,8 +30,20 @@
       <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/nicktheblackbeard/Main.java">
           <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="77">
+              <caret line="35" selection-start-line="35" selection-end-line="35" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ClientConnection.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/nicktheblackbeard/client/ClientConnection.java">
+          <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="360">
-              <caret line="36" selection-start-line="36" selection-end-line="36" />
+              <caret line="24" selection-start-line="24" selection-end-line="24" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -67,6 +78,7 @@
         <option value="$PROJECT_DIR$/src/main/java/com/nicktheblackbeard/clientdata/NClient.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/nicktheblackbeard/client/ClientConnection.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/nicktheblackbeard/Main.java" />
+        <option value="$PROJECT_DIR$/ffmpeg/video.sdp" />
         <option value="$PROJECT_DIR$/src/main/java/com/nicktheblackbeard/client/GUI.java" />
       </list>
     </option>
@@ -84,10 +96,10 @@
       </MavenImportingSettings>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds">
     <option name="y" value="25" />
     <option name="width" value="1440" />
-    <option name="height" value="808" />
+    <option name="height" value="810" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="1" id="Add" />
@@ -272,15 +284,15 @@
       <workItem from="1623278965761" duration="5142000" />
       <workItem from="1623320098648" duration="10594000" />
       <workItem from="1623362758274" duration="5555000" />
-      <workItem from="1623407175303" duration="2315000" />
+      <workItem from="1623407175303" duration="11245000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="45690000" />
+    <option name="totallyTimeSpent" value="54620000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="25" width="1440" height="808" extended-state="6" />
+    <frame x="0" y="25" width="1440" height="810" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
@@ -292,7 +304,7 @@
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
       <window_info anchor="right" id="Maven Projects" order="3" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.32907802" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3281471" />
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Terminal" order="7" />
       <window_info id="Capture Tool" order="2" />
@@ -681,10 +693,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/nicktheblackbeard/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="77">
+          <caret line="35" selection-start-line="35" selection-end-line="35" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/nicktheblackbeard/client/ClientConnection.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="435">
-          <caret line="36" column="29" selection-start-line="36" selection-start-column="29" selection-end-line="36" selection-end-column="29" />
+        <state relative-caret-position="360">
+          <caret line="24" selection-start-line="24" selection-end-line="24" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -693,25 +715,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/ffmpeg/video.sdp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="10" selection-start-line="10" selection-end-line="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/nicktheblackbeard/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="36" selection-start-line="36" selection-end-line="36" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state relative-caret-position="180">
+          <caret line="12" column="8" lean-forward="true" selection-start-line="12" selection-start-column="8" selection-end-line="12" selection-end-column="8" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/nicktheblackbeard/client/GUI.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="185">
-          <caret line="164" column="81" lean-forward="true" selection-start-line="164" selection-start-column="81" selection-end-line="164" selection-end-column="81" />
+        <state relative-caret-position="334">
+          <caret line="271" column="36" lean-forward="true" selection-start-line="271" selection-start-column="36" selection-end-line="271" selection-end-column="36" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
