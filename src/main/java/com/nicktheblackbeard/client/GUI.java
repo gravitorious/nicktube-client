@@ -235,6 +235,7 @@ public class GUI{
         while ((s = stdInput.readLine()) != null) {
             System.out.println(s);
         }
+        ClientConnection.output.writeObject("closed");
     }
 
     private void streamWithRTP() throws IOException, InterruptedException, ClassNotFoundException {
@@ -259,7 +260,9 @@ public class GUI{
         // startinf the process
         Process process = pb.start();
 
+        System.out.println("Στέλνω το ready");
         ClientConnection.output.writeObject("ready"); //send message to server
+
 
         BufferedReader stdInput
                 = new BufferedReader(new InputStreamReader(
@@ -270,6 +273,8 @@ public class GUI{
             System.out.println(s);
         }
         System.out.println("ΒΓΗΚΑ");
+        ClientConnection.output.writeObject("closed");
+
     }
 
 
