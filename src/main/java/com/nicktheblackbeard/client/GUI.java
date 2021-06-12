@@ -1,5 +1,6 @@
 package com.nicktheblackbeard.client;
 
+import com.nicktheblackbeard.Main;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -19,6 +20,11 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author nicktheblackbeard
  * 9/6/21
+ */
+
+
+/*
+    class for GUI. form.css file must be on the same directory
  */
 public class GUI{
 
@@ -78,7 +84,7 @@ public class GUI{
         this.boxForName = new HBox();
         this.boxForName.setAlignment(Pos.TOP_LEFT);
         this.appNameLabel = new Label("nickTube");
-        this.appNameLabel.getStyleClass().add("namelabel");
+        this.appNameLabel.getStyleClass().add("namelabel"); //get style from css
         this.boxForName.getChildren().add(this.appNameLabel);
         this.leftBox.getChildren().add(this.boxForName);
     }
@@ -137,9 +143,11 @@ public class GUI{
         this.downloadSpeedLabel.setText("Your download speed is: " + DownloadSpeed.floatDownloadSpeed + " kbps");
     }
 
+    /*
+       addListenerToFileTypeList invokes when user changes protocol
+     */
     void addListenerToFileTypeList(){
         this.fileType.setOnAction((event) -> {
-            //int selectedIndex = this.fileType.getSelectionModel().getSelectedIndex();
             this.clearFilesList();
             String selectedItem = (String) this.fileType.getSelectionModel().getSelectedItem();
             if(selectedItem.equals("mkv")) this.addMkvList();
@@ -149,15 +157,18 @@ public class GUI{
         });
     }
 
-
+    /*
+       addListenerToPlayButton invokes when user presses the play button!
+     */
     void addListenerToPlayButton(){
         this.playButton.setOnAction((event) -> {
 
+            //get selected file and protocol
             String nameOfSelectedFile = (String) this.fileNames.getSelectionModel().getSelectedItem();
             String nameOfSelectedProtocol = (String) this.protocol.getSelectionModel().getSelectedItem();
             try {
-                ClientConnection.output.writeObject(nameOfSelectedFile);
-                if(nameOfSelectedProtocol.equals("-")){
+                ClientConnection.output.writeObject(nameOfSelectedFile); //send to the server
+                if(nameOfSelectedProtocol.equals("-")){ //if user didn't check protocol chose base on quality
                     String[] splitname = nameOfSelectedFile.split("-");
                     String[] secondsplit = splitname[1].split("\\.");
                     if(secondsplit[0].equals("240p")) sendingProtocol = "TCP";
@@ -167,21 +178,19 @@ public class GUI{
                 else{
                     sendingProtocol = nameOfSelectedProtocol;
                 }
-                ClientConnection.output.writeObject(sendingProtocol);
+                ClientConnection.output.writeObject(sendingProtocol); //send the protocol to the server
                 String answerToBeginFFplay = (String) ClientConnection.input.readObject();
-                System.out.println("διάβασα:" + answerToBeginFFplay);
+                Main.log.debug("Answer from server to begin ffplay: " + answerToBeginFFplay);
                 if(answerToBeginFFplay.equals("TCP")){
-                    TimeUnit.SECONDS.sleep(3);
+                    TimeUnit.SECONDS.sleep(3); //wait for the server to run the ffmpeg
                     this.streamWithTCP();
                 }
-                else if(answerToBeginFFplay.equals("UDP")){
+                else if(answerToBeginFFplay.equals("UDP")){ //we don't need to wait
                     this.streamWithUDP();
                 }
                 else if(answerToBeginFFplay.equals("RTP/UDP")){
                     this.streamWithRTP();
                 }
-
-                //και το πρωτόκολλο
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (ClassNotFoundException e) {
@@ -201,7 +210,7 @@ public class GUI{
         pb.directory(new File(System.getProperty("user.dir") + "/ffmpeg/"));
         pb.redirectErrorStream(true);
 
-        // startinf the process
+        // start the process (run the command)
         Process process = pb.start();
 
         BufferedReader stdInput
@@ -210,7 +219,7 @@ public class GUI{
 
         String s;
         while ((s = stdInput.readLine()) != null) {
-            System.out.println(s);
+            Main.log.trace(s);
         }
     }
 
@@ -224,7 +233,7 @@ public class GUI{
         pb.directory(new File(System.getProperty("user.dir") + "/ffmpeg/"));
         pb.redirectErrorStream(true);
 
-        // startinf the process
+        // start the process (run the command)
         Process process = pb.start();
 
         BufferedReader stdInput
@@ -233,21 +242,18 @@ public class GUI{
 
         String s = null;
         while ((s = stdInput.readLine()) != null) {
-            System.out.println(s);
+            Main.log.trace(s);
         }
         ClientConnection.output.writeObject("closed");
     }
 
     private void streamWithRTP() throws IOException, InterruptedException, ClassNotFoundException {
         List<String> commands = new ArrayList<>();
-        //TimeUnit.SECONDS.sleep(13);
         commands.add("ffplay");
         commands.add("-protocol_whitelist");
         commands.add("file,rtp,udp");
         commands.add("-i");
         commands.add("video.sdp");
-        //commands.add("-fflags");
-        //commands.add("nobuffer");
 
         ProcessBuilder pb = new ProcessBuilder(commands);
         pb.directory(new File(System.getProperty("user.dir") + "/ffmpeg/"));
@@ -257,12 +263,9 @@ public class GUI{
         try (PrintWriter out = new PrintWriter(System.getProperty("user.dir") + "/ffmpeg/"+"video.sdp")) {
             out.println(videosdp);
         }
-        // startinf the process
+        // start the process (run the command)
         Process process = pb.start();
-
-        System.out.println("Στέλνω το ready");
         ClientConnection.output.writeObject("ready"); //send message to server
-
 
         BufferedReader stdInput
                 = new BufferedReader(new InputStreamReader(
@@ -270,19 +273,20 @@ public class GUI{
 
         String s = null;
         while ((s = stdInput.readLine()) != null) {
-            System.out.println(s);
+            Main.log.trace(s);
         }
-        System.out.println("ΒΓΗΚΑ");
         ClientConnection.output.writeObject("closed");
 
     }
-
 
 
     private void clearFilesList(){
         this.fileNames.getItems().clear();
     }
 
+    /*
+        create the list that will show up to the client files for mkv files
+     */
     private void addMkvList(){
         String filename;
         String format;
@@ -299,6 +303,9 @@ public class GUI{
         }
     }
 
+    /*
+        create the list that will show up to the client files for mp4 files
+     */
     private void addMp4List(){
         String filename;
         String format;
@@ -315,6 +322,9 @@ public class GUI{
         }
     }
 
+    /*
+        create the list that will show up to the client files for Avi files
+     */
     private void addAviList(){
         String filename;
         String format;

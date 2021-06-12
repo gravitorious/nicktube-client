@@ -78,16 +78,6 @@ public class NFile implements Serializable{
         this.qualities = qualities;
     }
 
-    /*
-    @Override
-    public String toString() {
-        return "NFile{" +
-                "name='" + name + '\'' +
-                ", format='" + format + '\'' +
-                ", qualities=" + qualities +
-                '}';
-    }*/
-
     @Override
     public String toString() {
         return "NFile{" +

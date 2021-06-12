@@ -1,5 +1,6 @@
 package com.nicktheblackbeard.client;
 
+import com.nicktheblackbeard.Main;
 import com.nicktheblackbeard.clientdata.NClient;
 import com.nicktheblackbeard.clientdata.NFile;
 
@@ -13,6 +14,12 @@ import java.util.ArrayList;
  * @author nicktheblackbeard
  * 9/6/21
  */
+
+/*
+    We use this class to connect to server
+    We use output and input variables to communicate with server in GUI
+ */
+
 public class ClientConnection {
 
     public static Socket socket = null;
@@ -30,13 +37,12 @@ public class ClientConnection {
         ArrayList<NFile> avi_files = client.getAviFiles();
         ArrayList<NFile> mp4_files = client.getMp4Files();
         ArrayList<NFile> mkv_files = client.getMkvFiles();
-        printList(avi_files);
-        printList(mp4_files);
-        printList(mkv_files);
-
-        System.out.println();
-
-
+        Main.log.info("Avi list read from server");
+        Main.log.info(this.listToString(avi_files));
+        Main.log.info("Mp4 list read from server");
+        Main.log.info(this.listToString(mp4_files));
+        Main.log.info("Mkv list read from server");
+        Main.log.info(this.listToString(mkv_files));
 
     }
 
@@ -47,9 +53,12 @@ public class ClientConnection {
     }
 
 
-    void printList(ArrayList<NFile> files){
+    private String listToString(ArrayList<NFile> files){
+        StringBuffer buffer = new StringBuffer();
         for(NFile file : files){
-            System.out.println(file.toString());
+            buffer.append(file.toString());
         }
+        String fileslist = buffer.toString();
+        return fileslist;
     }
 }
