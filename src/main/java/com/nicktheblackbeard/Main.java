@@ -35,6 +35,7 @@ public class Main extends Application{
 
     @Override
     public void stop() throws Exception {
+        log.info("Client closed the app...");
         ClientConnection.output.writeObject("-1"); //inform server that client closed the app
         ClientConnection.closeConnection();
     }

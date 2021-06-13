@@ -140,7 +140,7 @@ public class GUI{
     }
 
     public void setDownloadSpeedLabel(){
-        this.downloadSpeedLabel.setText("Your download speed is: " + DownloadSpeed.floatDownloadSpeed + " kbps");
+       this.downloadSpeedLabel.setText("Your download speed is: " + DownloadSpeed.floatDownloadSpeed + " kbps");
     }
 
     /*
